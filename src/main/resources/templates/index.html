@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Cafetín Smart - Inicio')}"></head>
+<body>
+    <div th:replace="~{fragments :: accessibility}"></div>
+
+    <div class="main-container">
+        <!-- Reemplazamos header y paneles complejos visuales por brevedad, asumiendo lo central es la App -->
+        <main id="main-content" role="main">
+            <!-- Hero Section -->
+            <div class="hero-section fade-in">
+                <div class="hero-logo" role="img" aria-label="Logo de Cafetín Smart - taza de café">☕</div>
+                <h1 class="hero-title">Cafetín Smart</h1>
+                <p class="hero-subtitle">Ordena rápido, evita las filas y disfruta tu descanso</p>
+
+                <!-- Botones principales -->
+                <div class="hero-buttons">
+                    <a th:href="@{/login}" class="btn btn-primary-custom" role="button">
+                        <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Iniciar sesión
+                    </a>
+                    <!-- MVC Enlace -->
+                    <a th:href="@{/menu}" class="btn btn-secondary-custom" role="button">
+                        <i class="bi bi-search" aria-hidden="true"></i> Explorar menú
+                    </a>
+                </div>
+            </div>
+
+            <section class="text-center mt-5 pt-4">
+                <a th:href="@{/menu}" class="btn btn-primary-custom btn-lg">
+                    <i class="bi bi-cup-hot" aria-hidden="true"></i> Ver menú del día
+                </a>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments :: footer}"></footer>
+    </div>
+
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

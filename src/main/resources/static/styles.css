@@ -1,0 +1,1777 @@
+/* Cafetín Smart - Estilos personalizados accesibles */
+
+:root {
+  /* Paleta de colores accesible para cafetería */
+  --color-primary: #D97706;
+  /* Naranja cálido */
+  --color-primary-dark: #B45309;
+  /* Naranja oscuro para hover */
+  --color-secondary: #78350F;
+  /* Marrón café oscuro */
+  --color-background: #FFFBEB;
+  /* Crema claro */
+  --color-background-alt: #FEF3C7;
+  /* Amarillo suave */
+  --color-text-dark: #1F2937;
+  /* Gris oscuro para texto */
+  --color-text-light: #6B7280;
+  /* Gris medio para texto secundario */
+  --color-success: #059669;
+  /* Verde para confirmaciones */
+  --color-white: #FFFFFF;
+  --color-border: #E5E7EB;
+
+  /* Espaciado */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Bordes */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+/* Reset y base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Accesibilidad - Foco visible */
+*:focus {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Contenedor principal */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  background-color: var(--color-white);
+  border-bottom: 2px solid var(--color-primary);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.logo {
+  color: var(--color-secondary);
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.logo:hover {
+  color: var(--color-primary);
+}
+
+/* Botones personalizados */
+.btn-primary-custom {
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  color: var(--color-white);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  min-height: 48px;
+  /* Tamaño mínimo táctil */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.btn-primary-custom:hover,
+.btn-primary-custom:focus {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary-custom {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.btn-secondary-custom:hover,
+.btn-secondary-custom:focus {
+  background-color: var(--color-background-alt);
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* =============================================================================
+   TARJETAS DE PRODUCTO
+   =============================================================================
+   Componente principal para mostrar productos del menú.
+   RF-A6: Las imágenes incluyen textos alternativos descriptivos.
+   ============================================================================= */
+.product-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  /* Removemos padding para que la imagen llegue hasta los bordes */
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Para que la imagen respete el border-radius */
+}
+
+.product-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+
+/* -----------------------------------------------------------------------------
+   IMAGEN DEL PRODUCTO
+   -----------------------------------------------------------------------------
+   Contenedor y estilos para las imágenes de producto.
+   - Usamos loading="lazy" en el HTML para carga diferida (mejora rendimiento)
+   - object-fit: cover asegura que la imagen cubra el espacio sin distorsión
+   ----------------------------------------------------------------------------- */
+.product-image-container {
+  width: 100%;
+  height: 180px;
+  /* Altura fija para consistencia visual */
+  overflow: hidden;
+  position: relative;
+  background-color: var(--color-background-alt);
+  /* Color de fondo mientras carga */
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La imagen cubre el contenedor sin distorsionarse */
+  transition: transform 0.3s ease;
+}
+
+/* Efecto zoom suave en hover */
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* -----------------------------------------------------------------------------
+   INFORMACIÓN DEL PRODUCTO
+   -----------------------------------------------------------------------------
+   Contenedor para nombre, descripción, precio y botón de añadir.
+   ----------------------------------------------------------------------------- */
+.product-info {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.product-description {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-sm);
+  flex-grow: 1;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* -----------------------------------------------------------------------------
+   ALTO CONTRASTE - IMÁGENES DE PRODUCTO
+   -----------------------------------------------------------------------------
+   En modo alto contraste, las imágenes necesitan bordes visibles.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .product-image-container {
+  border-bottom: 3px solid #FFFFFF;
+}
+
+body.high-contrast .product-card:hover .product-image {
+  transform: none;
+  /* Sin zoom en alto contraste */
+}
+
+/* Badges de categoría */
+.category-badge {
+  background-color: var(--color-background-alt);
+  border: 2px solid var(--color-primary);
+  color: var(--color-secondary);
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  min-height: 44px;
+  line-height: 1.5;
+}
+
+.category-badge:hover,
+.category-badge:focus {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.category-badge.active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Carrito */
+.cart-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.cart-item-info {
+  flex-grow: 1;
+}
+
+.cart-item-name {
+  font-weight: 600;
+  color: var(--color-secondary);
+  font-size: 1.1rem;
+}
+
+.cart-item-price {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.25rem;
+  background: var(--color-white);
+}
+
+.quantity-btn {
+  background-color: var(--color-primary);
+  border: none;
+  color: var(--color-white);
+  width: 44px;
+  /* RNF-A3: Tamaño mínimo táctil */
+  height: 44px;
+  /* RNF-A3: Tamaño mínimo táctil */
+  border-radius: var(--radius-sm);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-btn:hover,
+.quantity-btn:focus {
+  background-color: var(--color-primary-dark);
+  transform: scale(1.1);
+}
+
+.quantity-display {
+  font-weight: 600;
+  font-size: 1.1rem;
+  min-width: 40px;
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+/* Resumen de totales */
+.total-summary {
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: var(--spacing-md);
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.1rem;
+}
+
+.total-row.grand-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  padding-top: var(--spacing-sm);
+  border-top: 2px solid var(--color-border);
+  margin-top: var(--spacing-sm);
+}
+
+/* Ticket digital */
+.ticket-container {
+  background: var(--color-white);
+  border: 3px solid var(--color-success);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  max-width: 600px;
+  margin: var(--spacing-xl) auto;
+}
+
+.ticket-code {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  background-color: var(--color-background-alt);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) 0;
+  border: 2px dashed var(--color-primary);
+  letter-spacing: 0.1em;
+  font-family: 'Courier New', monospace;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: var(--color-success);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Opciones de pago */
+.payment-option {
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-height: 80px;
+}
+
+.payment-option:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.02);
+}
+
+.payment-option.selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-background-alt);
+  border-width: 3px;
+}
+
+.payment-option input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--color-primary);
+}
+
+.payment-option-content {
+  flex-grow: 1;
+}
+
+.payment-option-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.payment-option-description {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+/* Pantalla de inicio */
+.hero-section {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-background-alt) 0%, var(--color-background) 100%);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-logo {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xl);
+}
+
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Alertas y mensajes */
+.alert-custom {
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-left: 4px solid var(--color-primary);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .hero-buttons {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Accesibilidad - Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Mejoras de contraste */
+.text-muted-custom {
+  color: var(--color-text-light);
+}
+
+.bg-light-custom {
+  background-color: var(--color-background-alt);
+}
+
+/* Íconos - asegurar que siempre tengan texto */
+.icon-with-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* ============================================
+   HEURÍSTICA #1 DE NIELSEN: Visibilidad del Estado del Sistema
+   Sistema de Notificaciones Toast
+   ============================================ */
+
+/* Contenedor de notificaciones - posición inferior derecha */
+.toast-container {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  pointer-events: none;
+}
+
+/* Notificación toast individual */
+.toast-notification {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-weight: 500;
+  font-size: 0.95rem;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  max-width: 350px;
+  min-width: 250px;
+}
+
+/* Estado visible del toast */
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estado de salida del toast */
+.toast-notification.hide {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Tipos de toast según la acción */
+.toast-notification.toast-success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+  border-left: 4px solid #047857;
+}
+
+.toast-notification.toast-info {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-left: 4px solid var(--color-primary-dark);
+}
+
+.toast-notification.toast-warning {
+  background-color: #F59E0B;
+  color: var(--color-text-dark);
+  border-left: 4px solid #D97706;
+}
+
+.toast-notification.toast-error {
+  background-color: #DC2626;
+  color: var(--color-white);
+  border-left: 4px solid #B91C1C;
+}
+
+/* Icono del toast */
+.toast-notification .toast-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Contenido del toast */
+.toast-notification .toast-content {
+  flex-grow: 1;
+}
+
+.toast-notification .toast-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.toast-notification .toast-message {
+  font-size: 0.85rem;
+  opacity: 0.95;
+}
+
+/* Animación de entrada desde la derecha */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animación de salida hacia la derecha */
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.toast-notification.animate-in {
+  animation: slideInRight 0.3s ease forwards;
+}
+
+.toast-notification.animate-out {
+  animation: slideOutRight 0.3s ease forwards;
+}
+
+/* Responsive para móviles */
+@media (max-width: 576px) {
+  .toast-container {
+    right: var(--spacing-sm);
+    bottom: var(--spacing-md);
+  }
+
+  .toast-notification {
+    max-width: 100%;
+    min-width: auto;
+  }
+}
+
+/* =============================================================================
+   MODO DE ALTO CONTRASTE - ACCESIBILIDAD WCAG 2.2 NIVEL AA
+   =============================================================================
+
+   Autor: Estudiante de Desarrollo de Software
+   Fecha: 2024
+
+   Descripción:
+   Este módulo implementa el modo de alto contraste para usuarios con
+   discapacidad visual (baja visión, daltonismo, sensibilidad a la luz).
+
+   Requisitos funcionales cumplidos:
+   - RF-A2: El sistema debe incluir modo de alto contraste accesible
+
+   Requisitos no funcionales cumplidos:
+   - RNF-A1: Cumplir con WCAG 2.2 nivel AA
+   - RNF-A2: Contraste mínimo 4.5:1 para textos y 3:1 para elementos UI
+
+   Contribuye al ODS 10: Reducción de las desigualdades
+   - Meta 10.2: Potenciar y promover la inclusión social de todas las personas
+
+   Paleta de colores utilizada:
+   - Negro (#000000) - Fondo principal, máximo contraste
+   - Blanco (#FFFFFF) - Texto principal, ratio 21:1 sobre negro
+   - Amarillo (#FFD700) - Elementos interactivos, ratio 12:1 sobre negro
+   - Verde (#00FF00) - Estados de éxito
+   - Cian (#00FFFF) - Estados hover en enlaces
+
+   Referencias:
+   - WCAG 2.2: https://www.w3.org/WAI/WCAG22/quickref/
+   - Contrast Checker: https://webaim.org/resources/contrastchecker/
+
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   VARIABLES CSS - TEMA DE ALTO CONTRASTE
+   -----------------------------------------------------------------------------
+   Sobrescribimos las variables CSS del tema normal cuando el usuario
+   activa el modo de alto contraste (clase 'high-contrast' en el body).
+
+   Usamos variables CSS porque facilitan el mantenimiento y permiten
+   cambiar todos los colores desde un solo lugar.
+   ----------------------------------------------------------------------------- */
+body.high-contrast {
+  /*
+   * Color de fondo principal - Negro puro
+   * Razón: El negro puro (#000000) proporciona el máximo contraste posible
+   * con el texto blanco, alcanzando un ratio de 21:1 (WCAG AAA requiere 7:1)
+   */
+  --color-background: #000000;
+  --color-background-alt: #0a0a0a;
+
+  /*
+   * Colores de texto - Blanco puro
+   * Razón: El blanco (#FFFFFF) sobre negro alcanza ratio 21:1
+   * Esto supera ampliamente el mínimo de 4.5:1 requerido por WCAG AA
+   */
+  --color-text-dark: #FFFFFF;
+  --color-text-light: #FFFFFF;
+  /* En alto contraste, todo el texto es blanco */
+
+  /*
+   * Color primario - Amarillo dorado
+   * Razón: El amarillo (#FFD700) sobre negro tiene un ratio de 12:1
+   * Se usa para elementos interactivos (botones, enlaces, precios)
+   * El amarillo es altamente visible para personas con daltonismo
+   */
+  --color-primary: #FFD700;
+  --color-primary-dark: #FFC000;
+
+  /*
+   * Color secundario - Blanco
+   * Usado para títulos y elementos destacados
+   */
+  --color-secondary: #FFFFFF;
+
+  /*
+   * Invertimos el color "white" para mantener consistencia
+   * Las tarjetas que normalmente son blancas, ahora serán negras
+   */
+  --color-white: #000000;
+
+  /*
+   * Bordes - Blanco para máxima visibilidad
+   * Los bordes blancos delimitan claramente cada elemento
+   */
+  --color-border: #FFFFFF;
+
+  /*
+   * Color de éxito - Verde puro
+   * Ratio sobre negro: 8.5:1 (cumple WCAG AAA)
+   */
+  --color-success: #00FF00;
+
+  /*
+   * IMPORTANTE: Eliminamos todas las sombras
+   * Razón: Las sombras sutiles no son perceptibles para usuarios con
+   * baja visión y pueden crear confusión visual. En alto contraste,
+   * usamos bordes sólidos en lugar de sombras.
+   */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+/* -----------------------------------------------------------------------------
+   INDICADOR DE FOCO - NAVEGACIÓN POR TECLADO
+   -----------------------------------------------------------------------------
+   RF-A1: El sistema debe permitir navegación completa mediante teclado
+
+   El indicador de foco es CRÍTICO para usuarios que navegan con teclado
+   (personas con discapacidad motriz, usuarios de lectores de pantalla).
+
+   Diseño del indicador:
+   - Outline amarillo de 3px (altamente visible)
+   - Separación de 3px del elemento (outline-offset)
+   - Doble borde (negro + blanco) para visibilidad en cualquier fondo
+   ----------------------------------------------------------------------------- */
+body.high-contrast *:focus {
+  /* Outline amarillo - color primario del tema */
+  outline: 3px solid #FFD700 !important;
+  outline-offset: 3px !important;
+
+  /*
+   * Box-shadow con doble borde para mayor visibilidad
+   * - Primer borde (6px): Negro, crea separación
+   * - Segundo borde (9px): Blanco, contraste adicional
+   * Esto asegura que el foco sea visible sobre cualquier fondo
+   */
+  box-shadow: 0 0 0 6px #000000, 0 0 0 9px #FFFFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   ESTILOS DE TEXTO
+   -----------------------------------------------------------------------------
+   Aseguramos que TODO el texto sea blanco puro (#FFFFFF) para mantener
+   el contraste máximo. Usamos !important para sobrescribir cualquier
+   estilo inline o de mayor especificidad.
+   ----------------------------------------------------------------------------- */
+body.high-contrast,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast li,
+body.high-contrast label,
+body.high-contrast .product-description,
+body.high-contrast .payment-option-description,
+body.high-contrast .hero-subtitle {
+  color: #FFFFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   ENLACES
+   -----------------------------------------------------------------------------
+   Los enlaces deben ser claramente identificables:
+   - Color amarillo (#FFD700) para diferenciarse del texto normal
+   - Subrayado obligatorio (algunas personas no distinguen colores)
+   - Grosor de subrayado de 2px para mayor visibilidad
+   - Cambio a cian (#00FFFF) en hover/focus para feedback visual
+   ----------------------------------------------------------------------------- */
+body.high-contrast a {
+  color: #FFD700 !important;
+  /*
+   * El subrayado es OBLIGATORIO en alto contraste
+   * No todos los usuarios pueden distinguir colores, el subrayado
+   * proporciona una pista visual adicional de que es un enlace
+   */
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  /* Subrayado más grueso = más visible */
+}
+
+/*
+ * Estado hover/focus de enlaces
+ * Cambiamos a cian para indicar claramente la interacción
+ * El cian (#00FFFF) tiene ratio 10:1 sobre negro
+ */
+body.high-contrast a:hover,
+body.high-contrast a:focus {
+  color: #00FFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   BOTONES
+   -----------------------------------------------------------------------------
+   RF-A5: Los botones deben tener etiquetas ARIA y descripciones alternativas
+   RNF-A3: Tamaño mínimo táctil de 44x44px (definido en la clase base)
+
+   Diseño de botones en alto contraste:
+   - Fondo negro con texto amarillo
+   - Borde blanco de 3px (claramente delimita el botón)
+   - Texto en negrita (font-weight: 700) para mayor legibilidad
+   - En hover: se invierte (fondo amarillo, texto negro)
+   ----------------------------------------------------------------------------- */
+body.high-contrast .btn,
+body.high-contrast .btn-primary-custom,
+body.high-contrast .btn-secondary-custom,
+body.high-contrast button:not(.quantity-btn) {
+  background-color: #000000 !important;
+  color: #FFD700 !important;
+  border: 3px solid #FFFFFF !important;
+  /* Borde grueso para delimitar */
+  font-weight: 700 !important;
+  /* Negrita para mejor legibilidad */
+}
+
+/*
+ * Estado hover de botones
+ * Invertimos los colores para feedback visual claro
+ * transform: none evita movimientos que pueden marear a algunos usuarios
+ */
+body.high-contrast .btn:hover,
+body.high-contrast .btn-primary-custom:hover,
+body.high-contrast .btn-secondary-custom:hover,
+body.high-contrast button:not(.quantity-btn):hover {
+  background-color: #FFD700 !important;
+  color: #000000 !important;
+  transform: none !important;
+  /* Sin animaciones de movimiento */
+}
+
+/* -----------------------------------------------------------------------------
+   TARJETAS DE PRODUCTO
+   -----------------------------------------------------------------------------
+   Las tarjetas contienen información de productos del menú.
+   En alto contraste:
+   - Fondo negro
+   - Borde blanco de 3px
+   - Sin sombras (box-shadow: none)
+   - Nombre del producto en blanco
+   - Precio en amarillo (destaca la información importante)
+   ----------------------------------------------------------------------------- */
+body.high-contrast .product-card {
+  background-color: #000000 !important;
+  border: 3px solid #FFFFFF !important;
+  box-shadow: none !important;
+  /* Eliminamos sombras sutiles */
+}
+
+/*
+ * Hover en tarjetas: solo cambia el color del borde
+ * No usamos transform para evitar mareos (RNF-A4)
+ */
+body.high-contrast .product-card:hover {
+  border-color: #FFD700 !important;
+  transform: none !important;
+}
+
+/* Nombre del producto - Blanco para máximo contraste */
+body.high-contrast .product-name {
+  color: #FFFFFF !important;
+}
+
+/*
+ * Precio del producto - Amarillo para destacar
+ * El precio es información crítica, debe ser fácil de encontrar
+ */
+body.high-contrast .product-price {
+  color: #FFD700 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   BADGES DE CATEGORÍA
+   -----------------------------------------------------------------------------
+   Los badges permiten filtrar productos por categoría.
+   Deben ser claramente interactivos y mostrar estado activo.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .category-badge {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+/*
+ * Estados hover, focus y activo
+ * Todos usan el mismo estilo para consistencia
+ * El fondo amarillo indica claramente cuál está seleccionado
+ */
+body.high-contrast .category-badge:hover,
+body.high-contrast .category-badge:focus,
+body.high-contrast .category-badge.active {
+  background-color: #FFD700 !important;
+  color: #000000 !important;
+  transform: none !important;
+}
+
+/* -----------------------------------------------------------------------------
+   FORMULARIOS (INPUTS, SELECTS, TEXTAREAS)
+   -----------------------------------------------------------------------------
+   Los campos de formulario deben ser claramente visibles y
+   mostrar feedback cuando están enfocados.
+   ----------------------------------------------------------------------------- */
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+/* Estado focus - Borde amarillo indica campo activo */
+body.high-contrast input:focus,
+body.high-contrast select:focus,
+body.high-contrast textarea:focus {
+  border-color: #FFD700 !important;
+}
+
+/*
+ * Placeholder text - Gris claro
+ * Ratio sobre negro: 10:1 (cumple WCAG AA)
+ * Es más tenue que el texto ingresado para diferenciarlo
+ */
+body.high-contrast input::placeholder {
+  color: #CCCCCC !important;
+}
+
+/* -----------------------------------------------------------------------------
+   CARRITO DE COMPRAS
+   -----------------------------------------------------------------------------
+   Sección donde el usuario ve los productos agregados.
+   - Items con borde blanco
+   - Nombre en blanco, precio en amarillo
+   - Controles de cantidad con botones amarillos
+   ----------------------------------------------------------------------------- */
+body.high-contrast .cart-item {
+  background-color: #000000 !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+body.high-contrast .cart-item-name {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .cart-item-price {
+  color: #FFD700 !important;
+}
+
+/* Contenedor de controles de cantidad (+/-) */
+body.high-contrast .quantity-controls {
+  border: 3px solid #FFFFFF !important;
+  background-color: #000000 !important;
+}
+
+/*
+ * Botones de cantidad (+ y -)
+ * Fondo amarillo porque son la acción principal del control
+ * RNF-A3: Tamaño mínimo 44x44px (definido en estilos base)
+ */
+body.high-contrast .quantity-btn {
+  background-color: #FFD700 !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+body.high-contrast .quantity-btn:hover {
+  background-color: #FFFFFF !important;
+  transform: none !important;
+}
+
+/* Número que muestra la cantidad actual */
+body.high-contrast .quantity-display {
+  color: #FFFFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   RESUMEN DE TOTALES
+   -----------------------------------------------------------------------------
+   Panel que muestra subtotal, impuestos y total.
+   Usamos borde amarillo para destacar esta sección importante.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .total-summary {
+  background-color: #000000 !important;
+  border: 3px solid #FFD700 !important;
+  /* Amarillo para destacar */
+}
+
+body.high-contrast .total-row {
+  color: #FFFFFF !important;
+}
+
+/*
+ * Total final - Amarillo y con borde superior
+ * Es la información más importante de esta sección
+ */
+body.high-contrast .total-row.grand-total {
+  color: #FFD700 !important;
+  border-top-color: #FFFFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   OPCIONES DE PAGO
+   -----------------------------------------------------------------------------
+   Radio buttons para seleccionar método de pago.
+   El estado seleccionado debe ser claramente visible.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .payment-option {
+  background-color: #000000 !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+body.high-contrast .payment-option:hover {
+  border-color: #FFD700 !important;
+  transform: none !important;
+}
+
+/*
+ * Opción seleccionada - Borde amarillo más grueso (4px)
+ * El aumento de grosor proporciona feedback adicional
+ */
+body.high-contrast .payment-option.selected {
+  border: 4px solid #FFD700 !important;
+}
+
+body.high-contrast .payment-option-title {
+  color: #FFFFFF !important;
+}
+
+/* Radio buttons nativos - Color de acento amarillo */
+body.high-contrast input[type="radio"] {
+  accent-color: #FFD700 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   TICKET DIGITAL (CONFIRMACIÓN DE PEDIDO)
+   -----------------------------------------------------------------------------
+   Pantalla de éxito después de completar un pedido.
+   Usamos verde (#00FF00) para indicar éxito.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .ticket-container {
+  background-color: #000000 !important;
+  border: 4px solid #00FF00 !important;
+  /* Verde = éxito */
+}
+
+/* Código del ticket - Amarillo para destacar */
+body.high-contrast .ticket-code {
+  background-color: #000000 !important;
+  color: #FFD700 !important;
+  border: 3px dashed #FFD700 !important;
+}
+
+/* Icono de check/éxito */
+body.high-contrast .success-icon {
+  color: #00FF00 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   SECCIÓN HERO (PÁGINA DE INICIO)
+   -----------------------------------------------------------------------------
+   Banner principal con bienvenida y botones de acción.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .hero-section {
+  background: #000000 !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+body.high-contrast .hero-title {
+  color: #FFFFFF !important;
+}
+
+/* -----------------------------------------------------------------------------
+   HEADER (ENCABEZADO)
+   -----------------------------------------------------------------------------
+   Contiene el logo y navegación principal.
+   Borde inferior amarillo para delimitar del contenido.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .app-header {
+  background-color: #000000 !important;
+  border-bottom: 4px solid #FFD700 !important;
+}
+
+/* Logo en amarillo - es el elemento de marca */
+body.high-contrast .logo {
+  color: #FFD700 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   BARRA DE ACCESIBILIDAD
+   -----------------------------------------------------------------------------
+   Contiene los botones para activar alto contraste y cambiar tamaño de texto.
+   Esta barra siempre debe ser accesible y visible.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .accessibility-bar {
+  background-color: #000000 !important;
+  border-bottom: 3px solid #FFD700 !important;
+}
+
+body.high-contrast .accessibility-button {
+  background-color: #000000 !important;
+  color: #FFD700 !important;
+  border: 3px solid #FFD700 !important;
+}
+
+body.high-contrast .accessibility-button:hover,
+body.high-contrast .accessibility-button:focus {
+  background-color: #FFD700 !important;
+  color: #000000 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   NOTIFICACIONES TOAST
+   -----------------------------------------------------------------------------
+   Mensajes emergentes que informan al usuario sobre acciones realizadas.
+   Cada tipo tiene un color distintivo según su naturaleza.
+
+   RNF-A5: Mensajes claros, simples y sin jerga técnica
+   ----------------------------------------------------------------------------- */
+body.high-contrast .toast-notification {
+  border: 3px solid #FFFFFF !important;
+  background-color: #000000 !important;
+}
+
+/* Toast de éxito - Verde */
+body.high-contrast .toast-notification.toast-success {
+  color: #00FF00 !important;
+  border-color: #00FF00 !important;
+}
+
+/* Toast informativo - Cian */
+body.high-contrast .toast-notification.toast-info {
+  color: #00FFFF !important;
+  border-color: #00FFFF !important;
+}
+
+/* Toast de advertencia - Amarillo */
+body.high-contrast .toast-notification.toast-warning {
+  color: #FFD700 !important;
+  border-color: #FFD700 !important;
+}
+
+/* Toast de error - Rojo */
+body.high-contrast .toast-notification.toast-error {
+  color: #FF4444 !important;
+  border-color: #FF4444 !important;
+}
+
+/* -----------------------------------------------------------------------------
+   SKIP LINK (SALTAR AL CONTENIDO)
+   -----------------------------------------------------------------------------
+   RF-A1: Navegación por teclado
+
+   Este enlace permite a usuarios de teclado saltar directamente al
+   contenido principal, evitando tener que navegar por todos los
+   elementos del header.
+
+   Normalmente está oculto, pero aparece cuando recibe foco.
+   ----------------------------------------------------------------------------- */
+body.high-contrast .skip-link {
+  background-color: #FFD700 !important;
+  color: #000000 !important;
+}
+
+/* =============================================================================
+   REDUCCIÓN DE MOVIMIENTO
+   =============================================================================
+
+   RNF-A4: Las animaciones deben tener opción de reducir o desactivar
+   para evitar mareos (motion reduction)
+
+   Descripción:
+   Esta media query detecta la preferencia del sistema operativo del usuario.
+   Si el usuario ha configurado "reducir movimiento" en su sistema (Windows,
+   macOS, iOS, Android), desactivamos TODAS las animaciones.
+
+   Esto es importante para:
+   - Personas con trastornos vestibulares
+   - Personas con epilepsia fotosensible
+   - Personas con TDAH que se distraen con animaciones
+   - Personas que simplemente prefieren interfaces más estáticas
+
+   Referencia WCAG: Criterio 2.3.3 (Animación desde Interacciones)
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  /*
+   * Aplicamos a TODOS los elementos y pseudo-elementos
+   * Usamos !important para sobrescribir cualquier animación
+   */
+  *,
+  *::before,
+  *::after {
+    /* Reducimos duración a prácticamente 0 (no podemos usar 0 por bugs) */
+    animation-duration: 0.01ms !important;
+    /* Solo una iteración para que termine inmediatamente */
+    animation-iteration-count: 1 !important;
+    /* Sin transiciones */
+    transition-duration: 0.01ms !important;
+    /* Scroll instantáneo en lugar de suave */
+    scroll-behavior: auto !important;
+  }
+
+  /* Notificaciones toast sin animación de entrada/salida */
+  .toast-notification {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .toast-notification.show,
+  .toast-notification.animate-in {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+
+  .toast-notification.hide,
+  .toast-notification.animate-out {
+    opacity: 0 !important;
+    transform: translateX(100%) !important;
+  }
+
+  /* Elementos que normalmente tienen hover con movimiento */
+  .product-card:hover,
+  .btn:hover,
+  .category-badge:hover {
+    transform: none !important;
+  }
+}
+
+/* ===========================
+   BARRA DE ACCESIBILIDAD
+   =========================== */
+
+.accessibility-bar {
+  background-color: var(--color-background-alt);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.35rem var(--spacing-md);
+}
+
+/* Botones de accesibilidad (alto contraste / tamaño de texto) */
+.accessibility-button {
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text-dark);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  min-height: 44px;
+  /* tamaño mínimo táctil */
+  min-width: 44px;
+  box-shadow: var(--shadow-sm);
+}
+
+.accessibility-button:hover,
+.accessibility-button:focus {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary-dark);
+}
+
+/* Ajuste para móviles */
+@media (max-width: 576px) {
+  .accessibility-bar {
+    padding-inline: var(--spacing-sm);
+  }
+}
+
+/* =============================================================================
+   MODAL DE AYUDA DE ATAJOS DE TECLADO
+   =============================================================================
+   RF-A1: El sistema debe permitir navegación completa mediante teclado.
+
+   Este modal muestra todos los atajos de teclado disponibles en la aplicación.
+   Se activa presionando la tecla "?" en cualquier página.
+   ============================================================================= */
+
+/* Fondo oscuro del modal (overlay) */
+.keyboard-help-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Estado visible del modal */
+.keyboard-help-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Contenedor del contenido del modal */
+.keyboard-help-content {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.keyboard-help-modal.show .keyboard-help-content {
+  transform: scale(1);
+}
+
+/* Encabezado del modal */
+.keyboard-help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 2px solid var(--color-border);
+  background-color: var(--color-background-alt);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.keyboard-help-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Botón de cerrar */
+.keyboard-help-close {
+  background: none;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-dark);
+  transition: all 0.2s ease;
+}
+
+.keyboard-help-close:hover,
+.keyboard-help-close:focus {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Cuerpo del modal */
+.keyboard-help-body {
+  padding: var(--spacing-md);
+}
+
+.keyboard-help-body h3 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.keyboard-help-body h3:first-child {
+  margin-top: 0;
+}
+
+/* Lista de atajos */
+.keyboard-shortcuts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.keyboard-shortcuts-list li {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  gap: var(--spacing-xs);
+}
+
+.keyboard-shortcuts-list li span {
+  margin-left: auto;
+  color: var(--color-text-light);
+}
+
+/* Estilo de las teclas (kbd) */
+kbd {
+  background-color: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  box-shadow: 0 2px 0 var(--color-border);
+}
+
+/* -----------------------------------------------------------------------------
+   ALTO CONTRASTE - MODAL DE ATAJOS
+   ----------------------------------------------------------------------------- */
+body.high-contrast .keyboard-help-modal {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.high-contrast .keyboard-help-content {
+  background-color: #000000;
+  border: 3px solid #FFFFFF;
+}
+
+body.high-contrast .keyboard-help-header {
+  background-color: #000000;
+  border-bottom-color: #FFD700;
+}
+
+body.high-contrast .keyboard-help-header h2 {
+  color: #FFD700;
+}
+
+body.high-contrast .keyboard-help-close {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+body.high-contrast .keyboard-help-close:hover,
+body.high-contrast .keyboard-help-close:focus {
+  background-color: #FFD700;
+  color: #000000;
+}
+
+body.high-contrast .keyboard-help-body h3 {
+  color: #FFD700;
+  border-bottom-color: #FFFFFF;
+}
+
+body.high-contrast .keyboard-shortcuts-list li span {
+  color: #FFFFFF;
+}
+
+body.high-contrast kbd {
+  background-color: #000000;
+  border-color: #FFD700;
+  color: #FFD700;
+  box-shadow: 0 2px 0 #FFD700;
+}
+
+/* =============================================================================
+   PANEL DE ATAJOS DE TECLADO (VISIBLE)
+   =============================================================================
+   RF-A1: El sistema debe permitir navegación completa mediante teclado.
+   RF-A4: Compatible con lectores de pantalla (NVDA, JAWS, Narrador de Windows).
+
+   Este panel muestra los atajos de teclado de forma visible y accesible.
+   El narrador de Windows puede leer todo el contenido.
+   ============================================================================= */
+
+.keyboard-shortcuts-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  /* Oculto fuera de la pantalla */
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  background-color: var(--color-white);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+/* Estado visible del panel */
+.keyboard-shortcuts-panel.show {
+  right: 0;
+}
+
+/* Cuando está hidden pero queremos que el lector pueda acceder */
+.keyboard-shortcuts-panel[hidden] {
+  display: block !important;
+  /* Mantener en DOM para lectores */
+  right: -400px;
+}
+
+/* Contenido del panel */
+.shortcuts-panel-content {
+  padding: var(--spacing-md);
+  position: relative;
+}
+
+/* Título del panel */
+.shortcuts-panel-title {
+  font-size: 1.25rem;
+  color: var(--color-secondary);
+  margin: 0 0 var(--spacing-md) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Botón cerrar */
+.shortcuts-panel-close {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: none;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-dark);
+  transition: all 0.2s ease;
+}
+
+.shortcuts-panel-close:hover,
+.shortcuts-panel-close:focus {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Cuerpo del panel */
+.shortcuts-panel-body {
+  margin-top: var(--spacing-md);
+}
+
+.shortcuts-panel-body section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.shortcuts-panel-body h3 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.shortcuts-panel-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shortcuts-panel-body li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-background-alt);
+}
+
+.shortcuts-panel-body li:last-child {
+  border-bottom: none;
+}
+
+.shortcuts-panel-body li span {
+  margin-left: auto;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  text-align: right;
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Overlay cuando el panel está abierto */
+.shortcuts-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.shortcuts-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* -----------------------------------------------------------------------------
+   ALTO CONTRASTE - PANEL DE ATAJOS
+   ----------------------------------------------------------------------------- */
+body.high-contrast .keyboard-shortcuts-panel {
+  background-color: #000000;
+  border-left: 3px solid #FFD700;
+}
+
+body.high-contrast .shortcuts-panel-title {
+  color: #FFD700;
+  border-bottom-color: #FFD700;
+}
+
+body.high-contrast .shortcuts-panel-close {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+body.high-contrast .shortcuts-panel-close:hover,
+body.high-contrast .shortcuts-panel-close:focus {
+  background-color: #FFD700;
+  color: #000000;
+}
+
+body.high-contrast .shortcuts-panel-body h3 {
+  color: #FFD700;
+  border-bottom-color: #FFFFFF;
+}
+
+body.high-contrast .shortcuts-panel-body li {
+  border-bottom-color: #333333;
+}
+
+body.high-contrast .shortcuts-panel-body li span {
+  color: #FFFFFF;
+}
+
+/* Responsive para móviles */
+@media (max-width: 576px) {
+  .keyboard-shortcuts-panel {
+    max-width: 100%;
+    right: -100%;
+  }
+
+  .keyboard-shortcuts-panel[hidden] {
+    right: -100%;
+  }
+
+  .shortcuts-panel-body li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .shortcuts-panel-body li span {
+    margin-left: 0;
+    text-align: left;
+    margin-top: var(--spacing-xs);
+  }
+}
+
+/* Contador del carrito */
+.cart-count-badge {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 999px;
+    padding: 4px 9px;
+    min-width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    line-height: 1;
+    text-shadow: none;
+}
+
+/* Contador del carrito en modo alto contraste */
+.high-contrast .cart-count-badge,
+body.high-contrast .cart-count-badge {
+    background-color: #ffff00 !important;
+    color: #000000 !important;
+    border: 2px solid #ffffff !important;
+    text-shadow: none !important;
+}

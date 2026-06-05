@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cafetin_smart_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: cafetin_smart
+    ports:
+      - "3306:3306"
+    volumes:
+      - cafetin_mysql_data:/var/lib/mysql
+
+volumes:
+  cafetin_mysql_data:

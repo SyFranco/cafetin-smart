@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Cafetín Smart</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS adaptado a Thymeleaf -->
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <!-- Accesibilidad -->
+    <div th:fragment="accessibility">
+        <!-- Skip to main content -->
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+        <!-- Barra de accesibilidad con atajos de teclado visibles para lectores de pantalla -->
+        <div class="accessibility-bar" role="region" aria-label="Opciones de accesibilidad">
+            <div class="container-fluid d-flex justify-content-end align-items-center gap-2 flex-wrap">
+                <!-- Botón de atajos de teclado -->
+                <button type="button" class="accessibility-button" id="btn-show-shortcuts" aria-haspopup="dialog" aria-label="Ver atajos de teclado disponibles">
+                    <i class="bi bi-keyboard" aria-hidden="true"></i>
+                    <span class="d-none d-sm-inline">Atajos</span>
+                </button>
+                <!-- Botón alto contraste -->
+                <button type="button" class="accessibility-button" id="btn-toggle-contrast" aria-pressed="false" aria-label="Alto contraste, atajo Alt más K">
+                    <i class="bi bi-circle-half" aria-hidden="true"></i>
+                    <span class="d-none d-sm-inline">Alto contraste</span>
+                </button>
+                <!-- Botón aumentar tamaño de texto -->
+                <button type="button" class="accessibility-button" id="btn-increase-font" aria-pressed="false" aria-label="Aumentar tamaño del texto, atajo Alt más A">
+                    <span aria-hidden="true">A+</span>
+                    <span class="visually-hidden">Aumentar texto</span>
+                </button>
+                <!-- Botón restablecer tamaño de texto -->
+                <button type="button" class="accessibility-button" id="btn-reset-font" aria-label="Restablecer tamaño del texto, atajo Alt más R">
+                    <span aria-hidden="true">A</span>
+                    <span class="visually-hidden">Restablecer texto</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel de atajos de teclado (legible por Narrador de Windows) -->
+        <aside id="keyboard-shortcuts-panel" class="keyboard-shortcuts-panel" role="complementary" aria-labelledby="shortcuts-title" hidden>
+            <div class="shortcuts-panel-content">
+                <h2 id="shortcuts-title" class="shortcuts-panel-title">
+                    <i class="bi bi-keyboard" aria-hidden="true"></i>
+                    Atajos de teclado disponibles
+                </h2>
+                <button type="button" class="shortcuts-panel-close" aria-label="Cerrar panel de atajos">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+                <div class="shortcuts-panel-body">
+                    <section aria-labelledby="nav-shortcuts">
+                        <h3 id="nav-shortcuts">Navegación</h3>
+                        <ul role="list">
+                            <li><kbd>Alt</kbd> + <kbd>C</kbd> <span>Ir al carrito de compras</span></li>
+                            <li><kbd>Alt</kbd> + <kbd>M</kbd> <span>Ir al menú de productos</span></li>
+                            <li><kbd>Alt</kbd> + <kbd>H</kbd> <span>Ir a la página de inicio</span></li>
+                        </ul>
+                    </section>
+                    <section aria-labelledby="access-shortcuts">
+                        <h3 id="access-shortcuts">Accesibilidad</h3>
+                        <ul role="list">
+                            <li><kbd>Alt</kbd> + <kbd>K</kbd> <span>Activar o desactivar alto contraste</span></li>
+                            <li><kbd>Alt</kbd> + <kbd>A</kbd> <span>Aumentar tamaño del texto</span></li>
+                            <li><kbd>Alt</kbd> + <kbd>R</kbd> <span>Restablecer tamaño del texto</span></li>
+                        </ul>
+                    </section>
+                    <section aria-labelledby="general-shortcuts">
+                        <h3 id="general-shortcuts">General</h3>
+                        <ul role="list">
+                            <li><kbd>Tab</kbd> <span>Navegar al siguiente elemento</span></li>
+                            <li><kbd>Shift</kbd> + <kbd>Tab</kbd> <span>Navegar al elemento anterior</span></li>
+                            <li><kbd>Enter</kbd> <span>Activar botón o enlace seleccionado</span></li>
+                            <li><kbd>Escape</kbd> <span>Cerrar este panel</span></li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Header -->
+    <header th:fragment="header" class="app-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Enlace MVC a la ruta raíz -->
+                <a th:href="@{/}" class="logo">
+                    <span aria-hidden="true">☕</span>
+                    <span>Cafetín Smart</span>
+                </a>
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Usuario Autenticado -->
+                    <div sec:authorize="isAuthenticated()" class="d-none d-md-flex align-items-center text-dark">
+                        <i class="bi bi-person-circle fs-5 me-2" style="color: var(--color-primary);"></i>
+                        <span sec:authentication="principal.nombre" style="font-size: 0.95rem; font-weight: 500;"></span>
+                    </div>
+
+                    <!-- Botón Carrito -->
+                    <a th:href="@{/carrito}" class="btn btn-primary-custom" aria-label="Ver carrito">
+                        <i class="bi bi-cart3" aria-hidden="true"></i> Carrito
+                        <span id="cart-badge"
+                              class="cart-count-badge ms-1"
+                              th:text="${cantidadCarrito}"
+                              th:style="${cantidadCarrito > 0} ? '' : 'display:none;'">0</span>
+                    </a>
+
+                    <!-- Botón Iniciar Sesión (Público) -->
+                    <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn btn-secondary-custom">
+                        <i class="bi bi-box-arrow-in-right"></i> Ingresar
+                    </a>
+
+                    <!-- Botón Cerrar Sesión (Autenticado) -->
+                    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="m-0">
+                        <button type="submit" class="btn btn-secondary-custom">
+                            <i class="bi bi-box-arrow-right"></i> Salir
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Footer -->
+    <footer th:fragment="footer" class="text-center mt-5 pt-4 pb-3" style="color: var(--color-text-light); border-top: 1px solid var(--color-border);">
+        <p class="mb-1">Cafetín Smart - Universidad 2026</p>
+        <p class="small">Diseñado con accesibilidad y rapidez en mente</p>
+    </footer>
+
+    <!-- Scripts -->
+    <div th:fragment="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script th:src="@{/main.js}"></script>
+        <!-- Script dinámico eliminado: ahora AJAX maneja el Toast -->
+    </div>
+
+</body>
+</html>

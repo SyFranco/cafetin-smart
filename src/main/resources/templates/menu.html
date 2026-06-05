@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Menú - Cafetín Smart')}"></head>
+<body>
+    <div th:replace="~{fragments :: accessibility}"></div>
+    <header th:replace="~{fragments :: header}"></header>
+
+    <div class="main-container">
+        <main id="main-content" role="main">
+            <!-- Filtros y categorías DYNAMICOS MVC -->
+            <section aria-labelledby="categories-heading" class="mb-4">
+                <h1 id="categories-heading" class="visually-hidden">Categorías del menú</h1>
+                <div class="d-flex flex-wrap gap-2 justify-content-center mb-4">
+                    <!-- Usamos th:classappend para pintar el activo dependiendo de la categoriaSeleccionada que viene del controller -->
+                    <a th:href="@{/menu(categoria='todos', orden=${ordenSeleccionado})}" 
+                       class="category-badge"
+                       th:classappend="${categoriaSeleccionada == 'todos'} ? 'active' : ''">
+                        <i class="bi bi-grid" aria-hidden="true"></i> Todos
+                    </a>
+                    <a th:href="@{/menu(categoria='bebidas', orden=${ordenSeleccionado})}" 
+                       class="category-badge"
+                       th:classappend="${categoriaSeleccionada == 'bebidas'} ? 'active' : ''">
+                        <i class="bi bi-cup-hot" aria-hidden="true"></i> Bebidas
+                    </a>
+                    <a th:href="@{/menu(categoria='snacks', orden=${ordenSeleccionado})}" 
+                       class="category-badge"
+                       th:classappend="${categoriaSeleccionada == 'snacks'} ? 'active' : ''">
+                        <i class="bi bi-basket" aria-hidden="true"></i> Snacks
+                    </a>
+                    <a th:href="@{/menu(categoria='menus', orden=${ordenSeleccionado})}" 
+                       class="category-badge"
+                       th:classappend="${categoriaSeleccionada == 'menus'} ? 'active' : ''">
+                        <i class="bi bi-egg-fried" aria-hidden="true"></i> Menús del día
+                    </a>
+                    <a th:href="@{/menu(categoria='postres', orden=${ordenSeleccionado})}" 
+                       class="category-badge"
+                       th:classappend="${categoriaSeleccionada == 'postres'} ? 'active' : ''">
+                        <i class="bi bi-cake2" aria-hidden="true"></i> Postres
+                    </a>
+                </div>
+
+                <!-- Filtros adicionales de Ordenamiento -->
+                <form id="form-orden" th:action="@{/menu}" method="get" class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
+                    <input type="hidden" name="categoria" th:value="${categoriaSeleccionada}">
+                    <label for="sort-select" class="fw-semibold text-muted-custom">Ordenar por:</label>
+                    <select name="orden" id="sort-select" class="form-select" style="width: auto; min-width: 160px;" aria-label="Ordenar productos" onchange="document.getElementById('form-orden').submit()">
+                        <option value="popular" th:selected="${ordenSeleccionado == 'popular'}">Más populares</option>
+                        <option value="price-low" th:selected="${ordenSeleccionado == 'price-low'}">Precio: menor a mayor</option>
+                        <option value="price-high" th:selected="${ordenSeleccionado == 'price-high'}">Precio: mayor a menor</option>
+                        <option value="name" th:selected="${ordenSeleccionado == 'name'}">Nombre A-Z</option>
+                    </select>
+                </form>
+            </section>
+
+            <!-- LISTADO DINÁMICO DESDE JAVA MVC -->
+            <section class="mb-5">
+                <h2 class="h3 mb-4" style="color: var(--color-secondary);">
+                    <i class="bi bi-bag-check" aria-hidden="true"></i> Productos Disponibles
+                </h2>
+                
+                <div class="row g-4">
+                    <!-- Este es el bloque repetitivo th:each  -->
+                    <div class="col-sm-6 col-lg-4" th:each="producto : ${productos}">
+                        <article class="product-card">
+                            <div class="product-image-container">
+                                <img th:src="${producto.imagenUrl}"
+                                     th:alt="${producto.nombre}"
+                                     class="product-image"
+                                     loading="lazy">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name" th:text="${producto.nombre}">Nombre del Producto</h3>
+                                <p class="product-description" th:text="${producto.descripcion}">
+                                    Descripción del producto.
+                                </p>
+                                <p class="product-price" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">$0.00</p>
+                                <button type="button" class="btn btn-primary-custom w-100 btn-ajax-add" th:data-id="${producto.id}">
+                                    <i class="bi bi-plus-circle" aria-hidden="true"></i> Añadir
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Mensaje si no hay productos -->
+                    <div th:if="${#lists.isEmpty(productos)}" class="col-12 text-center text-muted">
+                        <p>No se encontraron productos para esta categoría.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments :: footer}"></footer>
+    </div>
+
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

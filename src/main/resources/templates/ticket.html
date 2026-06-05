@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Ticket de Compra - Cafetín Smart')}"></head>
+<body>
+    <div th:replace="~{fragments :: accessibility}"></div>
+    <header th:replace="~{fragments :: header}"></header>
+
+    <div class="main-container">
+        <main id="main-content" role="main" class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+            <div class="card shadow-lg border-0" style="max-width: 500px; width: 100%;">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill" style="font-size: 5rem; color: var(--color-success);"></i>
+                    </div>
+                    
+                    <h1 class="h2 mb-2" style="color: var(--color-secondary);">¡Pedido Confirmado!</h1>
+                    <p class="text-muted mb-4" th:text="'Gracias por tu compra, ' + ${pedido.nombreCliente}">Gracias por tu compra</p>
+
+                    <div class="p-4 rounded mb-4" style="background-color: var(--color-background-alt); border: 2px dashed var(--color-border);">
+                        <p class="mb-1 text-muted text-uppercase small fw-bold">Código de Recojo</p>
+                        <h2 class="display-4 fw-bold" style="color: var(--color-primary); letter-spacing: 5px;" th:text="${pedido.codigoRecojo}">A1B2C</h2>
+                    </div>
+
+                    <div class="text-start mb-4">
+                        <p class="mb-1"><strong>N° de Pedido:</strong> <span th:text="${pedido.id}">1</span></p>
+                        <p class="mb-1"><strong>Fecha:</strong> <span th:text="${#temporals.format(pedido.fechaCreacion, 'dd-MM-yyyy HH:mm')}">01-01-2026</span></p>
+                        <p class="mb-1"><strong>Método de Pago:</strong> <span th:text="${pedido.metodoPago}">TARJETA</span></p>
+                        <p class="mb-1"><strong>Total Pagado:</strong> <span class="fw-bold" style="color: var(--color-primary);" th:text="'$' + ${#numbers.formatDecimal(pedido.total, 1, 2)}">$0.00</span></p>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Muestra este código en el mostrador para retirar tu pedido.
+                    </div>
+
+                    <div class="mt-4">
+                        <a th:href="@{/}" class="btn btn-secondary-custom">
+                            <i class="bi bi-house"></i> Volver al Inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="~{fragments :: footer}"></footer>
+    </div>
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>
